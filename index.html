@@ -9,10 +9,76 @@
     <meta content='yes' name='apple-mobile-web-app-capable'/>
     <title>Weather Angular</title>
 
-    <script src="js/angular.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+    
 </head>
 <body ng-controller="WeatherController">
 	<h1>Weather Page App</h1>
+	<div class="search-form">
+		<form ng-submit="sendPost()">
+			<input type="text" placeholder="City name" ng-model="cityName">
+			<button type="submit">Search</button>
+		</form>		
+	</div>
 
+	{{position}}
+
+	<div class="weather-block">
+		<h2>
+			{{currentCity}},{{country}}
+		</h2>
+		<div class="currentCityTemperature">
+			<img ng-src="{{icon}}">
+			<span style="line-height:50px; font-weight:bold; font-size:30px; display:inline-block; vertical-align:top;">{{temperature | number:1}} °C</span>			
+		</div>
+		<table class="">
+			<tbody>
+				<tr>
+					<td>Wind</td>
+					<td>Speed {{wind_speed}} m/s</td>
+				</tr>
+				<tr>
+					<td>Cloudiness</td>
+					<td>{{cloudiness}}</td>
+				</tr>
+				<tr>
+					<td>Pressure</td>
+					<td>{{pressure}} hpa</td>
+				</tr>
+				<tr>
+					<td>Humidity</td>
+					<td>{{humidity}} %</td>
+				</tr>
+				<tr>
+					<td>Sunrise</td>
+					<td >
+						{{sunrise*1000 | date:"'at' h:mm "}}
+					</td>
+				</tr>
+				<tr>
+					<td>Sunset</td>
+					<td >
+						{{sunset*1000 | date:"'at' h:mm "}}
+					</td>
+				</tr>
+				<tr>
+					<td>Geo coords</td>
+					<td id="coord">
+						latitude - {{geo_coords_lat}}
+						longitude - {{geo_coords_lon}}
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<style type="text/css">
+		table tr td{
+			padding: 10px;
+		}
+	</style>
+
+	<script src="js/angular.min.js"></script>
+	<script src="app/weather.js"></script>
 </body>
 </html>
