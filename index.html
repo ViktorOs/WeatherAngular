@@ -16,59 +16,57 @@
 <body ng-controller="WeatherController">
 	<h1>Weather Page App</h1>
 	<div class="search-form">
-		<form ng-submit="sendPost()">
+		<form ng-submit="getCityWeather()">
 			<input type="text" placeholder="City name" ng-model="cityName">
 			<button type="submit">Search</button>
 		</form>		
 	</div>
 
-	<div class="weather-block" ng-hide>
-		<h2>
-			{{currentCity}},{{country}}
-		</h2>
-		<div class="currentCityTemperature">
-			<img ng-src="{{icon}}">
-			<span style="line-height:50px; font-weight:bold; font-size:30px; display:inline-block; vertical-align:top;">{{temperature | number:1}} °C</span>			
+	<div class="cities-list" ng-show="currentCity">
+
+		<div class="city-block" ng-repeat="cityItem in cityResponseArray track by $index">
+			<h2>
+				{{cityItem.name}},{{cityItem.sys.country}}
+				<a  href="javascript:;" class="delete-city" ng-click="removeCity($index)">Delete</a>
+			</h2>
+
+			<div class="currentCityTemperature">
+				<img ng-src="http://openweathermap.org/img/w/{{cityItem.weather[0].icon}}.png">
+				<span style="line-height:50px; font-weight:bold; font-size:30px; display:inline-block; vertical-align:top;">{{cityItem.main.temp - 273.15 | number:1}} °C</span>			
+			</div>
+			<table class="">
+				<tbody>
+					<tr>
+						<td>Wind</td>
+						<td>Speed {{cityItem.wind.speed}} m/s</td>
+					</tr>				
+					<tr>
+						<td>Humidity</td>
+						<td>{{cityItem.main.humidity}} %</td>
+					</tr>
+					<tr>
+						<td>Sunrise</td>
+						<td >
+							{{cityItem.sys.sunrise*1000 | date:"'at' h:mm "}}
+						</td>
+					</tr>
+					<tr>
+						<td>Sunset</td>
+						<td >
+							{{cityItem.sys.sunset*1000 | date:"'at' h:mm "}}
+						</td>
+					</tr>
+					<tr>
+						<td>Geo coords</td>
+						<td id="coord">
+							latitude - {{cityItem.coord.lat}}
+							longitude - {{cityItem.coord.lon}}
+						</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
-		<table class="">
-			<tbody>
-				<tr>
-					<td>Wind</td>
-					<td>Speed {{wind_speed}} m/s</td>
-				</tr>
-				<tr>
-					<td>Cloudiness</td>
-					<td>{{cloudiness}}</td>
-				</tr>
-				<tr>
-					<td>Pressure</td>
-					<td>{{pressure}} hpa</td>
-				</tr>
-				<tr>
-					<td>Humidity</td>
-					<td>{{humidity}} %</td>
-				</tr>
-				<tr>
-					<td>Sunrise</td>
-					<td >
-						{{sunrise*1000 | date:"'at' h:mm "}}
-					</td>
-				</tr>
-				<tr>
-					<td>Sunset</td>
-					<td >
-						{{sunset*1000 | date:"'at' h:mm "}}
-					</td>
-				</tr>
-				<tr>
-					<td>Geo coords</td>
-					<td id="coord">
-						latitude - {{geo_coords_lat}}
-						longitude - {{geo_coords_lon}}
-					</td>
-				</tr>
-			</tbody>
-		</table>
+
 	</div>
 	<style type="text/css">
 		table tr td{
