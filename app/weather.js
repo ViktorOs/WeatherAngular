@@ -37,17 +37,6 @@ angular.module('weatherApp', [])
         $http.get(url).success(function(data, status) {
         	$scope.cityResponseArray.push(data);  
 
-        	console.log($scope.cityResponseArray)      	
-
-            $scope.wind_speed = data.wind.speed;   
-            $scope.icon = "http://openweathermap.org/img/w/"+data.weather[0].icon+".png";
-            $scope.temperature = data.main.temp - 273.15;
-            $scope.humidity = data.main.humidity;
-            $scope.country = data.sys.country;
-            $scope.sunrise = data.sys.sunrise;
-            $scope.sunset = data.sys.sunset;   
-            $scope.geo_coords_lat = data.coord.lat;
-            $scope.geo_coords_lon = data.coord.lon;
             $scope.currentCity = data.name || $scope.cityName;
 
             if(newCity){
